@@ -1,7 +1,6 @@
 .chatContainer {
   display: flex;
   flex-direction: column-reverse;
-  height: 100%;
   width: 100%;
 }
 
@@ -31,7 +30,7 @@
 
 .button {
   padding: 8px 24px;
-  background-color: #1e40af;
+  background-color: #2563eb;
   color: white;
   border: none;
   font-size: 1em;
