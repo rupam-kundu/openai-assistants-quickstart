@@ -83,8 +83,12 @@ const Chat = ({
       const data = await res.json();
       setThreadId(data.threadId);
     };
-    createThread();
+    createThread();  
   }, []);
+
+  useEffect(() => {
+    console.log("Thread id: ", threadId);
+  }, [threadId]);
 
   const sendMessage = async (text) => {
     const response = await fetch(
