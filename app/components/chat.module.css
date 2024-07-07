@@ -22,6 +22,10 @@
   background-color: #eff6ff;
 }
 
+.input::placeholder {
+  color: #2563eb;
+}
+
 .input:focus {
   outline: none !important;
   border-color: #1e3a8a;
