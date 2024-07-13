@@ -7,6 +7,7 @@ import Markdown from "react-markdown";
 // @ts-expect-error - no types for this yet
 import { AssistantStreamEvent } from "openai/resources/beta/assistants/assistants";
 import { RequiredActionFunctionToolCall } from "openai/resources/beta/threads/runs/runs";
+import { v4 as uuidv4 } from 'uuid';
 
 type MessageProps = {
   role: "user" | "assistant" | "code";
@@ -57,8 +58,23 @@ type ChatProps = {
   ) => Promise<string>;
 };
 
+// Utility function to generate a unique session ID
+const generateUniqueSessionId = () => {
+  return uuidv4();
+};
+
+// Get or create a unique session ID
+const getSessionId = () => {
+  let sessionId = localStorage.getItem('sessionId');
+  if (!sessionId) {
+    sessionId = generateUniqueSessionId();
+    localStorage.setItem('sessionId', sessionId);
+  }
+  return sessionId;
+};
+
 const Chat = ({
-  functionCallHandler = () => Promise.resolve(""), // default to return empty string
+  functionCallHandler = () => Promise.resolve(""),
 }: ChatProps) => {
   const [userInput, setUserInput] = useState("");
   const [messages, setMessages] = useState([]);
@@ -77,8 +93,13 @@ const Chat = ({
   // create a new threadID when chat component created
   useEffect(() => {
     const createThread = async () => {
+      const sessionId = getSessionId();
       const res = await fetch(`/api/assistants/threads`, {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ sessionId })
       });
       const data = await res.json();
       setThreadId(data.threadId);
@@ -91,12 +112,17 @@ const Chat = ({
   }, [threadId]);
 
   const sendMessage = async (text) => {
+    const sessionId = getSessionId();
     const response = await fetch(
       `/api/assistants/threads/${threadId}/messages`,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          content: text,
+          sessionId: sessionId,
+          content: text
         }),
       }
     );
