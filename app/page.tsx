@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import styles from "./page.module.css";
 import Hero from "./components/hero";
 import FunctionCalling from "./examples/all/page";
 
