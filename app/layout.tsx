@@ -5,8 +5,8 @@ import { assistantId } from "./assistant-config";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "BioStartupAI",
-  description: "AI agent for Biomedicine startups",
+  title: "Startup Copilot",
+  description: "AI agent for startups",
   icons: {
     icon: "/openai.svg",
   },
