@@ -39,21 +39,30 @@ const FunctionCalling = () => {
   // );
 
   return (
-    <main className={styles.main}>
-      <div className={styles.container}>
-        {/*
+    <>
+      <div className="w-full text-center md:pr-8">
+        <p className="text-lg font-bold md:text-3xl text-blue-400 mt-20">
+          Ask a question and get an answer from our AI agent.
+        </p>
+      </div>
+      <main className={styles.main}>
+
+        <div className={styles.container}>
+          {/*
         <div className={styles.column}>
           <WeatherWidget {...weatherData} />
           <FileViewer />
         </div>
         */}
-        <div className={styles.chatContainer}>
-          <div className={styles.chat}>
-            <Chat functionCallHandler={functionCallHandler} />
+
+          <div className={styles.chatContainer}>
+            <div className={styles.chat}>
+              <Chat functionCallHandler={functionCallHandler} />
+            </div>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 };
 

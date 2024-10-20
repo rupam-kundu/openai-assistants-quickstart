@@ -1,6 +1,6 @@
 "use client";
-
 import React, { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import styles from "./chat.module.css";
 import { AssistantStream } from "openai/lib/AssistantStream";
 import Markdown from "react-markdown";
@@ -8,6 +8,7 @@ import Markdown from "react-markdown";
 import { AssistantStreamEvent } from "openai/resources/beta/assistants/assistants";
 import { RequiredActionFunctionToolCall } from "openai/resources/beta/threads/runs/runs";
 import { v4 as uuidv4 } from 'uuid';
+import attach_file from "../../public/attach_file_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg";
 
 type MessageProps = {
   role: "user" | "assistant" | "code";
@@ -104,7 +105,7 @@ const Chat = ({
       const data = await res.json();
       setThreadId(data.threadId);
     };
-    createThread();  
+    createThread();
   }, []);
 
   useEffect(() => {
@@ -275,7 +276,7 @@ const Chat = ({
       })
       return [...prevMessages.slice(0, -1), updatedLastMessage];
     });
-    
+
   }
 
   return (
@@ -297,6 +298,7 @@ const Chat = ({
           onChange={(e) => setUserInput(e.target.value)}
           placeholder="Enter your question"
         />
+        <Image className="me-1.5" src={attach_file.src} alt="attach file icon" width={30} height={30} />
         <button
           type="submit"
           className={styles.button}
