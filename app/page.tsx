@@ -4,7 +4,6 @@ import React from "react";
 import { useUser } from '@auth0/nextjs-auth0/client';
 import Hero from "./components/hero";
 import FunctionCalling from "./examples/all/page";
-import Login from "./login";
 import Logout from "./logout";
 
 const Home = () => {
@@ -18,13 +17,14 @@ const Home = () => {
       {user
         ?
         <>
+          <div className="flex justify-end mt-6 p-4 w-11/12">
+            <Logout />
+          </div>
           <FunctionCalling />
-          <Logout />
         </>
         :
         <>
           <Hero />
-          <Login />
         </>
       }
     </div>
