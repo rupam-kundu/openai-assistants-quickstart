@@ -1,10 +1,15 @@
 import { assistantId } from "@/app/assistant-config";
 import { openai } from "@/app/openai";
+import { client, run } from "@/app/utils/dbConnection";
 
 // upload file to assistant's vector store
 export async function POST(request) {
+  await client.connect();
+  const db = client.db("ai-agent");
   const formData = await request.formData(); // process file as FormData
   const file = formData.get("file"); // retrieve the single file from FormData
+  const username = formData.get("username");
+  const useremail = formData.get("useremail");
   const vectorStoreId = await getOrCreateVectorStore(); // get or create vector store
 
   // upload using the file stream
@@ -17,6 +22,14 @@ export async function POST(request) {
   await openai.beta.vectorStores.files.create(vectorStoreId, {
     file_id: openaiFile.id,
   });
+
+  await db.collection('files').insertOne({
+    fileId: openaiFile.id,
+    filename: file.name,
+    username: username,
+    useremail: useremail
+  });
+
   return new Response();
 }
 
@@ -50,10 +63,12 @@ export async function DELETE(request) {
   const vectorStoreId = await getOrCreateVectorStore(); // get or create vector store
   await openai.beta.vectorStores.files.del(vectorStoreId, fileId); // delete file from vector store
 
+  await client.connect();
+  const db = client.db("ai-agent");
+  await db.collection('files').deleteOne({ fileId: fileId });
+
   return new Response();
 }
-
-/* Helper functions */
 
 const getOrCreateVectorStore = async () => {
   const assistant = await openai.beta.assistants.retrieve(assistantId);
