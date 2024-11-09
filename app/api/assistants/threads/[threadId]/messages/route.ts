@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 
 // Send a new message to a thread
 export async function POST(request, { params: { threadId } }) {
-  const { sessionId, content } = await request.json();
+  const { username, useremail, content } = await request.json();
   let assistantMessage = "";
 
   await openai.beta.threads.messages.create(threadId, {
@@ -38,7 +38,8 @@ export async function POST(request, { params: { threadId } }) {
       if (threadId === event.data.thread_id) {
         const saveMessages = async () => {
           await db.collection('messages').insertOne({
-            sessionId: sessionId,
+            username: username,
+            useremail: useremail,
             threadId: threadId,
             runId: event.data.id,
             userMessage: content,

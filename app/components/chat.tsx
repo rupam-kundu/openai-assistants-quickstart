@@ -10,6 +10,7 @@ import { AssistantStreamEvent } from "openai/resources/beta/assistants/assistant
 import { RequiredActionFunctionToolCall } from "openai/resources/beta/threads/runs/runs";
 import { v4 as uuidv4 } from 'uuid';
 import attach_file from "../../public/attach_file_24dp_5F6368_FILL0_wght400_GRAD0_opsz24.svg";
+import { useUser } from '@auth0/nextjs-auth0/client';
 
 type MessageProps = {
   role: "user" | "assistant" | "code";
@@ -82,6 +83,7 @@ const Chat = ({
   const [messages, setMessages] = useState([]);
   const [inputDisabled, setInputDisabled] = useState(false);
   const [threadId, setThreadId] = useState("");
+  const { user, error, isLoading } = useUser();
 
   // automatically scroll to bottom of chat
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -95,13 +97,15 @@ const Chat = ({
   // create a new threadID when chat component created
   useEffect(() => {
     const createThread = async () => {
-      const sessionId = getSessionId();
+      // const sessionId = getSessionId();
+      const username = user?.name;
+      const useremail = user?.email;
       const res = await fetch(`/api/assistants/threads`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ sessionId })
+        body: JSON.stringify({ username, useremail })
       });
       const data = await res.json();
       setThreadId(data.threadId);
@@ -114,7 +118,9 @@ const Chat = ({
   }, [threadId]);
 
   const sendMessage = async (text) => {
-    const sessionId = getSessionId();
+    // const sessionId = getSessionId();
+    const username = user?.name;
+    const useremail = user?.email;
     const response = await fetch(
       `/api/assistants/threads/${threadId}/messages`,
       {
@@ -123,7 +129,8 @@ const Chat = ({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          sessionId: sessionId,
+          username: username,
+          useremail: useremail,
           content: text
         }),
       }
