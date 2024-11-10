@@ -17,8 +17,13 @@ const Home = () => {
       {user
         ?
         <>
-          <div className="flex justify-end mt-6 p-4 w-11/12">
-            <Logout />
+          <div className="flex items-center justify-between mt-6 p-4">
+            <h1 className="flex-1 text-3xl font-['Kinto Sans'] font-bold text-blue-900 text-center">
+              BioInvestAI
+            </h1>
+            <div className="">
+              <Logout />
+            </div>
           </div>
           <FunctionCalling />
         </>

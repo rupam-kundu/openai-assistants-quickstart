@@ -341,6 +341,7 @@ const Chat = ({
   };
 
   return (
+    <>
     <div className={styles.chatContainer} style={{ height: messages.length === 0 ? "20%" : "auto" }}>
       <div className={styles.messages}>
         {messages.map((msg, index) => (
@@ -407,6 +408,7 @@ const Chat = ({
         )}
       </div>
     </div>
+    </>
   );
 };
 
