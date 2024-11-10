@@ -6,8 +6,8 @@ import { assistantId } from "./assistant-config";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "BioMed Copilot",
-  description: "AI agent for biomedicine startups",
+  title: "BioInvestAI",
+  description: "BioInvestAI is an AI-powered assistant that accelerates biopharma investments by providing rapid preliminary analysis of early-stage startups. BioInvestAI leverages advanced AI and Retrieval Augmented Generation to streamline due diligence, save time, and enhance your investment decisions in the biopharma sector.",
   icons: {
     icon: "/openai.svg",
   },
