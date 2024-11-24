@@ -1,9 +1,9 @@
-import { UserProvider } from '@auth0/nextjs-auth0/client';
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Warnings from "./components/warnings";
 import { assistantId } from "./assistant-config";
 const inter = Inter({ subsets: ["latin"] });
+import { UserProvider } from '@auth0/nextjs-auth0/client';
 
 export const metadata = {
   title: "BioInvestAI",
